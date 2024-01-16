@@ -55,7 +55,7 @@ class Mario(pygame.sprite.Sprite):
             self.index_list += 0.25
             self.image = self.img_mario[int(self.index_list)]
         elif self.is_jumping:
-            self.image = self.img_mario[4]  # Display the jump frame
+            self.image = self.img_mario[4]  
             if self.jump_count >= -10:
                 neg = 1
                 if self.jump_count < 0:
