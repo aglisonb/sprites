@@ -22,7 +22,7 @@ while not leave:
     key = pg.key.get_pressed()
     if key[K_SPACE] and not jumping:
         jumping = True
-        jump_start_y = naruto_y  # Guarda a posição inicial do pulo
+        jump_start_y = naruto_y
 
     if jumping:
         if jump_count >= -10:
@@ -32,20 +32,20 @@ while not leave:
             naruto_y -= (jump_count ** 2) * 0.5 * neg
             jump_count -= 1
 
-            # Exibe as frames enquanto ele está pulando
+            
             if jump_count > -8:
-                frame_index = 0  # Frames de subida
+                frame_index = 0  
             else:
-                frame_index = 2  # Frames de queda
+                frame_index = 2  
 
             frame_y = 280  # Posição y fixa para todas as frames de pulo
             win.blit(sprite_sheet, (naruto_x, naruto_y), (frame_index * 80, frame_y, 80, 80))
         else:
             jumping = False
             jump_count = 10
-            frame_index = 5  # Frame de pouso
+            frame_index = 5  
             frame_y = 280
-            naruto_y = jump_start_y  # Restaura a posição inicial após o pulo
+            naruto_y = jump_start_y  
 
     key = pg.key.get_pressed()
     if key[K_RIGHT]:
