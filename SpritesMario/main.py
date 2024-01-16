@@ -37,12 +37,20 @@ class Mario(pygame.sprite.Sprite):
         self.is_running = False
         self.is_jumping = False
         self.jump_count = 10
+        self.velocity_x = 0
+        self.acceleration = 0.02  # Adjust acceleration
+        self.max_speed = 2.5  # Set maximum speed
 
     def update(self):
         keys = pygame.key.get_pressed()
 
         if keys[K_RIGHT]:
             self.is_running = True
+            self.velocity_x += self.acceleration
+
+            # Limit the maximum speed
+            if self.velocity_x > self.max_speed:
+                self.velocity_x = self.max_speed
         else:
             self.is_running = False
 
@@ -50,12 +58,13 @@ class Mario(pygame.sprite.Sprite):
             self.is_jumping = True
 
         if self.is_running:
-            if self.index_list > 3:
+            if self.index_list > 2.75:
                 self.index_list = 0
-            self.index_list += 0.25
+                self.rect.x += 15
+            self.index_list += 0.25 + self.velocity_x
             self.image = self.img_mario[int(self.index_list)]
         elif self.is_jumping:
-            self.image = self.img_mario[4]  
+            self.image = self.img_mario[4]  # Display the jump frame
             if self.jump_count >= -10:
                 neg = 1
                 if self.jump_count < 0:
@@ -68,6 +77,12 @@ class Mario(pygame.sprite.Sprite):
         else:
             self.index_list = 0
             self.image = self.img_mario[self.index_list]
+
+        # Apply friction to slow down Mario when not pressing the right arrow key
+        self.velocity_x *= 0.9
+
+        # Update the position based on velocity
+        self.rect.x += self.velocity_x
 
 
 sprites_all = pygame.sprite.Group()
